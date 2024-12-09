@@ -48,3 +48,10 @@
   margin-left: calc(-1 * var(--container-outside-width));
   margin-right: calc(-1 * var(--container-outside-width));
 }
+
+
+/* START HDF */
+.sm\:-mt-44 {
+  margin-top: 0px;
+}
+/* END HDF */

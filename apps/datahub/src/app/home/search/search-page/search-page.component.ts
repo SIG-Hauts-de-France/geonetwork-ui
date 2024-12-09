@@ -15,6 +15,7 @@ import {
 })
 export class SearchPageComponent implements OnInit {
   metadataQualityDisplay: boolean
+  selectedRecords: CatalogRecord[] = [];
 
   constructor(
     private searchRouter: RouterFacade,
@@ -31,5 +32,15 @@ export class SearchPageComponent implements OnInit {
 
   onMetadataSelection(metadata: CatalogRecord): void {
     this.searchRouter.goToMetadata(metadata)
+  }
+
+  hasSelectedRecords(): boolean {
+    return true;
+  }
+
+  exportToCSV(): void {
+    if (this.hasSelectedRecords()) {
+      console.log('Export CSV:', this.selectedRecords);
+    }
   }
 }

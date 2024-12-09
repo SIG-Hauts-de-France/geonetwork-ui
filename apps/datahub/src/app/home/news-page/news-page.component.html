@@ -1,9 +1,21 @@
 <div class="relative" gnUiSearchStateContainer="newsfeed">
-  <div class="backdrop bg-gray-50"></div>
+  <div class="backdrop"></div>
   <div
-    class="relative pt-[44px] container-lg flex flex-col-reverse sm:flex-row px-auto -mx-5 sm:px-0 sm:mx-auto"
+    class="relative pt-[44px] container-lg px-auto -mx-5 sm:px-0 sm:mx-auto"
   >
-    <div class="pr-0 lg:pr-[61px] overflow-hidden grow mt-11 sm:mt-0">
+    <div class="pr-0 lg:pr-[61px] overflow-hidden grow mt-11 sm:mt-0 flex justify-start">
+      <div
+        class="text-2xl font-title text-primary leading-7 text-left pl-5 sm:pl-0 flex items-center justify-center"
+        translate
+      >
+        datahub.news.themes
+      </div>
+      <div class="bg-secondary text-white font-bold rounded-full h-10 w-10 flex items-center justify-center ml-2">
+        {{ recordsCount$ | async }}
+      </div>
+    </div>
+    <datahub-thematic-list></datahub-thematic-list>
+    <div class="relative pt-[44px] pr-0 lg:pr-[61px] overflow-hidden grow mt-11 sm:mt-0">
       <h2
         class="text-2xl font-title text-primary leading-7 text-left mb-5 sm:mb-8 pl-5 sm:pl-0"
         translate
@@ -12,7 +24,7 @@
       </h2>
       <datahub-last-created></datahub-last-created>
     </div>
-    <div class="w-full sm:w-[var(--right-col-width)] shrink-0 px-5 mb-14">
+    <!-- <div class="w-full sm:w-[var(--right-col-width)] shrink-0 px-5 mb-14">
       <h2
         class="text-2xl font-title text-primary leading-7 text-left mb-5 sm:mb-8"
         translate
@@ -42,6 +54,6 @@
           datahub.news.contact.contactus
         </a>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

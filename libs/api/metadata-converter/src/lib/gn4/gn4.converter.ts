@@ -39,6 +39,7 @@ export class Gn4Converter extends BaseConverter<Gn4Record> {
       overviews: [],
       languages: [],
     }
+
     const record: CatalogRecord = Object.keys(_source).reduce(
       (prev, fieldName) =>
         this.fieldMapper.getMappingFn(fieldName)(prev, _source),

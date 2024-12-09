@@ -43,3 +43,36 @@ html.record-page-active {
 .tippy-box a:hover {
   @apply text-primary-lightest;
 }
+
+.hover-bg-primary-darker, .hover-bg-primary-darkest {
+  background-color: var(--color-primary);
+}
+
+.hover-bg-primary-darker:hover {
+  background-color: var(--color-primary-darker);
+}
+
+.hover-bg-primary-darkest:hover {
+  background-color: var(--color-primary-darkest);
+}
+
+header .decoration-primary {
+  text-decoration-color: white;
+}
+
+@font-face {
+  font-family: 'Etelka Text Pro Bold';
+  src: url(assets/EtelkaTextProBold.otf);
+}
+
+@font-face {
+  font-family: 'Etelka Text Pro';
+  src: url(assets/EtelkaTextPro.otf);
+}
+
+@font-face {
+  font-family: 'font_icon_select_1';
+  src: url(assets/dkan-topics.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

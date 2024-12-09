@@ -54,12 +54,13 @@ import { AppComponent } from './app.component'
 import { HeaderBadgeButtonComponent } from './home/header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home/home-header/home-header.component'
 import { HomePageComponent } from './home/home-page/home-page.component'
+import { NavigationApproachComponent } from './home/navigation-approach/navigation-approach.component'
 import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
 import { LastCreatedComponent } from './home/news-page/last-created/last-created.component'
 import { NewsPageComponent } from './home/news-page/news-page.component'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
-import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { SearchFiltersComponent } from './home/search/search-filters/search-filters.component'
+import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { HeaderRecordComponent } from './record/header-record/header-record.component'
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
@@ -83,6 +84,8 @@ import { RecordApisComponent } from './record/record-apis/record-apis.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
+import { LinkMenuComponent } from './home/link-menu/link-menu.component'
+import { ThematicListComponent } from './home/news-page/themes/thematic-list.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -103,12 +106,15 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     LastCreatedComponent,
     KeyFiguresComponent,
     NavigationMenuComponent,
+    NavigationApproachComponent,
     RecordRelatedRecordsComponent,
     RecordUserFeedbacksComponent,
     RecordMetadataComponent,
     RecordOtherlinksComponent,
     RecordDownloadsComponent,
     RecordApisComponent,
+    LinkMenuComponent,
+    ThematicListComponent,
   ],
   imports: [
     BrowserModule,

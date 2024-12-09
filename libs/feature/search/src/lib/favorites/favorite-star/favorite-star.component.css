@@ -1,0 +1,7 @@
+/* HDF START */
+@media (max-width: 400px) {
+    [data-test="favorite-count"]  {
+        display: none;
+    }
+}
+/* HDF END */

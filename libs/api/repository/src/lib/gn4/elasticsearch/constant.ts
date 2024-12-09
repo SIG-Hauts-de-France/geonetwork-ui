@@ -19,6 +19,9 @@ export const ES_SOURCE_SUMMARY = [
   'tag',
   'MD_LegalConstraintsUseLimitationObject',
   'qualityScore',
+  'themesSIG',
+  'otherKeywords',
+  'placeKeywords'
 ]
 
 export type EsQueryFieldsPriorityType = Record<string, number>

@@ -50,11 +50,11 @@ export class FilterDropdownComponent implements OnInit {
       startWith([] as FieldAvailableValue[]),
       map((values) =>
         values.map((v) => ({
-          ...v,
-          value: v.value.toString(), // converting to string for the dropdown
-        }))
+              ...v,
+              value: v.value.toString(), // converting to string for the dropdown
+            }))
       ),
       catchError(() => of([]))
-    )
+    );
   }
 }

@@ -1,12 +1,27 @@
 <div class="mb-6 md-description sm:mb-4 sm:pr-16">
+  <ng-container>
+    <button
+      *ngIf="isNew"
+      class="inline-block uppercase bg-secondary text-white news-button"
+      translate
+      >record.metadata.isNew</button
+    >
+    <button
+      *ngIf="isUpdated"
+      class="inline-block uppercase bg-primary text-white news-button"
+      translate
+      >record.metadata.isUpdated</button
+    >
+  </ng-container>
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
-    <gn-ui-max-lines [maxLines]="6" *ngIf="metadata.abstract">
+    <div *ngIf="metadata.abstract">
       <div>
         <gn-ui-markdown-parser
           [textContent]="metadata.abstract"
         ></gn-ui-markdown-parser>
       </div>
-    </gn-ui-max-lines>
+    </div>
+    <!--
     <div *ngIf="metadata.keywords?.length">
       <p class="mt-6 mb-3 font-medium text-primary text-sm" translate>
         record.metadata.keywords
@@ -21,11 +36,57 @@
         >
       </div>
     </div>
+    -->
+    <div *ngIf="themeSIGKeywords?.length">
+      <p class="mt-3 mb-3 font-medium text-primary text-sm" translate>
+        search.filters.themesSIG
+      </p>
+      <div class="sm:pb-4 flex flex-wrap gap-2">
+        <gn-ui-badge
+          class="inline-block lowercase"
+          (click)="onKeywordClick(keyword)"
+          [clickable]="true"
+          *ngFor="let keyword of themeSIGKeywords"
+          >{{ keyword.label }}</gn-ui-badge>
+      </div>
+    </div>
+    <div *ngIf="otherKeywords?.length">
+      <p class="mt-3 mb-3 font-medium text-primary text-sm" translate>
+        search.filters.otherKeywords
+      </p>
+      <div class="sm:pb-4 flex flex-wrap gap-2">
+        <gn-ui-badge
+          class="inline-block lowercase"
+          (click)="onKeywordClick(keyword)"
+          [clickable]="true"
+          *ngFor="let keyword of otherKeywords"
+          >{{ keyword.label }}</gn-ui-badge>
+      </div>
+    </div>
+    <div *ngIf="placeKeywords?.length">
+      <p class="mt-3 mb-3 font-medium text-primary text-sm" translate>
+        search.filters.placeKeywords
+      </p>
+      <div class="sm:pb-4 flex flex-wrap gap-2">
+        <gn-ui-badge
+          class="inline-block lowercase"
+          (click)="onKeywordClick(keyword)"
+          [clickable]="true"
+          *ngFor="let keyword of placeKeywords"
+          >{{ keyword.label }}</gn-ui-badge>
+      </div>
+    </div>
   </gn-ui-content-ghost>
 </div>
-
-<gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
-  <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
+<!--
+<gn-ui-expandable-panel [title]="'record.metadata.usage' | translate" c>
+-->
+<div class="flex flex-col">
+<div class="order-2">
+  <p class="mt-6 font-medium text-primary text-sm" translate>
+    record.metadata.usage
+  </p>
+  <div class="flex flex-col pt-6 px-6 rounded bg-gray-100 text-primary">
     <ng-container *ngFor="let license of licenses">
       <div *ngIf="license.url; else noUrl" class="text-primary">
         <a
@@ -63,10 +124,13 @@
       </div>
     </ng-container>
 
-    <span class="noUsage" *ngIf="!hasUsage">
+    <div class="noUsage mb-6" *ngIf="!hasUsage">
       {{ 'record.metadata.noUsage' | translate }}
-    </span>
+    </div>
   </div>
+</div>
+<div>
+<!--
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
   *ngIf="
@@ -77,11 +141,16 @@
   "
   [title]="'record.metadata.details' | translate"
 >
-  <div *ngIf="metadata.lineage" class="text-gray-900 flex flex-col mt-4 gap-2">
-    <p class="whitespace-pre-line break-words text-gray-900" gnUiLinkify>
+-->
+  <p class="mt-3 font-medium text-primary text-sm" translate>
+    record.metadata.details
+  </p>
+  <div *ngIf="metadata.lineage" class="flex flex-col mt-4 gap-2">
+    <p class="whitespace-pre-line break-words" gnUiLinkify>
       {{ metadata.lineage }}
     </p>
   </div>
+  <!--
   <div class="flex flex-row gap-6 mt-5 mb-8" *ngIf="resourceContact">
     <div
       *ngIf="resourceContact.organization?.logoUrl?.href"
@@ -132,21 +201,30 @@
       </div>
     </div>
   </div>
+  -->
   <div
     class="py-6 px-6 rounded bg-gray-100 grid grid-cols-2 gap-y-6 gap-x-[20px] text-gray-700"
   >
-    <div *ngIf="metadata.recordCreated">
-      <p class="text-sm" translate>record.metadata.creation</p>
+    <div>
+      <!--J'ai l'impression que c'est plutot resourceCreated  -->
+        <p class="text-sm" translate>record.metadata.datasetCreated</p>
+        <p class="text-primary font-medium mt-1">
+          {{ metadata.resourceCreated && metadata.resourceCreated.toLocaleDateString() || '-' }}
+        </p>
+    </div>
+    <div>
+        <p class="text-sm" translate>record.metadata.datasetUpdated</p>
+        <p class="text-primary font-medium mt-1">
+          {{ metadata.resourceUpdated && metadata.resourceUpdated.toLocaleDateString() || '-'  }}
+        </p>
+    </div>
+    <div>
+      <p class="text-sm" translate>record.metadata.recordUpdated</p>
       <p class="text-primary font-medium mt-1">
-        {{ metadata.recordCreated.toLocaleDateString() }}
+        {{ metadata.recordPublished && metadata.recordPublished.toLocaleDateString() || '-' }} 
       </p>
     </div>
-    <div *ngIf="metadata.recordPublished">
-      <p class="text-sm" translate>record.metadata.publication</p>
-      <p class="text-primary font-medium mt-1">
-        {{ metadata.recordPublished.toLocaleDateString() }}
-      </p>
-    </div>
+
     <div *ngIf="updateFrequency">
       <p class="text-sm" translate>record.metadata.updateFrequency</p>
       <p
@@ -157,6 +235,12 @@
         {{ updateFrequency }}
       </p>
     </div>
+    <!-- <div *ngIf="metadata.recordPublished">
+      <p class="text-sm" translate>record.metadata.publication</p>
+      <p class="text-primary font-medium mt-1">
+        {{ metadata.recordPublished.toLocaleDateString() }}
+      </p>
+    </div> -->
     <div *ngIf="metadata.languages">
       <p class="text-sm mb-1" translate>record.metadata.languages</p>
       <div class="flex flex-row gap-1 flex-wrap">
@@ -199,10 +283,20 @@
       </div>
     </div>
   </div>
+</div>
+</div>
+<!--
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
   *ngIf="metadata.landingPage"
   [title]="'record.metadata.technical' | translate"
+>
+-->
+<p class="mt-3 font-medium text-primary text-sm" translate>
+  record.metadata.technical
+</p>
+<div
+class="px-6 rounded bg-gray-100 gap-y-6 gap-x-[20px] text-gray-700"
 >
   <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
     <div *ngIf="metadata.recordUpdated">
@@ -219,12 +313,14 @@
         </a>
       </p>
     </div>
+    <!--
     <div *ngIf="metadata.ownerOrganization">
       <p class="text-sm" translate>record.metadata.owner</p>
       <p class="text-primary font-medium">
         {{ metadata.ownerOrganization.name }}
       </p>
     </div>
+    -->
     <div *ngIf="metadata.uniqueIdentifier">
       <p class="text-sm" translate>record.metadata.uniqueId</p>
       <div class="flex flex-row content-align items-end gap-1">
@@ -238,6 +334,7 @@
         </p>
       </div>
     </div>
+    <!--
     <div *ngIf="metadata.topics?.length">
       <p class="text-sm mb-1" translate>record.metadata.topics</p>
       <div class="sm:pb-4 sm:pr-16">
@@ -248,5 +345,9 @@
         >
       </div>
     </div>
+    -->
   </div>
+</div>
+<!--
 </gn-ui-expandable-panel>
+-->

@@ -2,8 +2,19 @@
   <datahub-search-filters
     [isQualitySortable]="metadataQualityDisplay"
   ></datahub-search-filters>
-  <div class="mt-6 rounded-lg text-gray-800 p-4 bg-slate-100">
+  <div class="mt-6 rounded-lg text-gray-800 text-[20px] font-bold p-4 bg-slate-100 flex items-center justify-between">
     <gn-ui-results-hits></gn-ui-results-hits>
+    <!--<gn-ui-button
+      type="secondary"
+      extraClass="m-auto !p-[14px]"
+      [disabled]="!hasSelectedRecords()"
+      title="{{ !hasSelectedRecords() ? 'Aucune donnée sélectionnée' : '' }}"
+      (click)="exportToCSV()"
+    >
+      <span class="uppercase text-[14px] tracking-widest" translate>
+        export.dataset.csv
+      </span>
+    </gn-ui-button>-->
   </div>
   <div class="mt-8">
     <gn-ui-results-list-container

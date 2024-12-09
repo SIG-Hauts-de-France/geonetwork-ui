@@ -1,16 +1,29 @@
 <button
   *ngFor="let l of tabLinks"
+  (click)="open = (open === l.label ? '' : l.label)"
   [routerLink]="l.link"
   [ngClass]="
     (activeLink$ | async).link === l.link
       ? 'decoration-primary'
       : 'decoration-transparent hover:decoration-primary transition-colors'
   "
-  class="hidden sm:block sm:py-4 uppercase truncate underline decoration-4 underline-offset-[19px]"
+  class="hidden sm:block sm:py-4 uppercase truncate underline decoration-[7px] underline-offset-[16px]"
   [style.color]="foregroundColor"
-  translate
->
+  translate>
   {{ l.label }}
+  <mat-icon *ngIf="l.children" class="material-symbols-outlined absolute r-0 t-1">arrow_drop_down</mat-icon>
+  <div *ngIf="l.children && l.label === open" class="absolute b-0 r-0 bg-primary z-50 p-2 pl-8 pr-8">
+    <a
+      *ngFor="let c of l.children"
+      (click)="$event.stopPropagation();open = (open === c.label ? '' : c.label)"
+      [href]="c.link"
+      class="hidden sm:block sm:py-4 uppercase truncate text-white"
+      translate
+      target="_blank"
+    >
+      {{ c.label }}
+    </a>
+  </div>
 </button>
 <button
   (click)="toggleMobileMenu()"
@@ -26,10 +39,18 @@
     <div *ngFor="let l of tabLinks">
       <button
         [routerLink]="l.link"
-        class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider w-full text-left truncate"
+        class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider w-full text-left"
         translate
       >
         {{ l.label }}
+      </button>
+      <button
+        *ngFor="let c of l.children"
+        [routerLink]="c.link"
+        class="block pl-10 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider w-full text-left"
+        translate
+      >
+        {{ c.label }}
       </button>
     </div>
   </div>

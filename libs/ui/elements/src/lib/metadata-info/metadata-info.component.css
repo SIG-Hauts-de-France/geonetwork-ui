@@ -11,3 +11,21 @@
 :host ::ng-deep gn-ui-copy-text-button button mat-icon {
   transform: scale(0.8);
 }
+.news-button {
+  border-radius: 5px;
+  margin: 6px;
+  padding: 6px;
+}
+
+
+/* START HDF */
+.md-description {
+  padding-right: 0px !important;
+}
+:host ::ng-deep gn-ui-markdown-parser p {
+  margin-bottom: 0px !important;
+}
+:host ::ng-deep .order-2 h5 {
+  display: none;
+}
+/* END HDF */

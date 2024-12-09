@@ -1,6 +1,6 @@
 module.exports = {
   '/geonetwork': {
-    target: 'http://localhost:8080',
+    target: 'https://opendata.hautsdefrance.fr',
     secure: true,
     logLevel: 'debug',
     changeOrigin: true,

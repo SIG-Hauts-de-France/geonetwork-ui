@@ -10,6 +10,8 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { Router } from '@angular/router'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -87,14 +89,21 @@ export class RecordMetadataComponent {
     })
   )
 
+  isAuthenticated$ = this.platformService
+    .isAnonymous()
+    .pipe(map((isAnonymous) => !isAnonymous))
+
   showOverlay = true
 
   constructor(
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
-    private orgsService: OrganizationsServiceInterface
+    private orgsService: OrganizationsServiceInterface,
+    private platformService: PlatformServiceInterface,
+    private router: Router,
   ) {}
+
 
   onTabIndexChange(index: number): void {
     this.selectedTabIndex$.next(index)
@@ -104,7 +113,19 @@ export class RecordMetadataComponent {
   }
 
   onInfoKeywordClick(keyword: Keyword) {
-    this.searchService.updateFilters({ any: keyword.label })
+    let queryParams;
+    if (keyword.thesaurus?.id && keyword.thesaurus?.id.indexOf('themes_sig')  !== -1) {
+      queryParams = { themesSIG: keyword.label};
+    } else if (keyword.type === 'place') {
+      queryParams = { placeKeywords: keyword.label};
+    } else if (keyword.type === 'other') {
+      queryParams = { otherKeywords: keyword.label};
+    }
+    if (queryParams) {
+      this.router.navigate(['/search'], { queryParams });
+    } else {
+      this.searchService.updateFilters({ any: keyword.label })
+    }
   }
 
   onOrganizationClick(org: Organization) {

@@ -1,0 +1,15 @@
+<div class="flex flex-wrap justify-center m-2">
+  <div *ngFor="let theme of themes" class="flex flex-col items-center p-4 rounded-3xl cursor-pointer w-[200px] h-[200px] hover:bg-gray-200">
+    <div (click)="navigateToSearch(theme.name)">
+      <div class="flex justify-center theme-icon text-primary" [innerHTML]="getIconContent(theme.name)"></div>
+      <div class="flex">
+          <div class="text-primary font-bold flex items-center justify-center ">
+            {{ theme.label }}
+          </div>
+          <div class="bg-secondary text-white text-sm rounded-full h-8 w-8 flex items-center justify-center ml-2">
+            {{ theme.datasetCount }}
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

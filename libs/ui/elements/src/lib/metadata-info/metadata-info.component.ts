@@ -3,7 +3,9 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
 } from '@angular/core'
 import {
   DatasetRecord,
@@ -17,11 +19,32 @@ import { getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
   styleUrls: ['./metadata-info.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MetadataInfoComponent {
+export class MetadataInfoComponent implements OnChanges {
   @Input() metadata: Partial<DatasetRecord>
   @Input() incomplete: boolean
   @Output() keyword = new EventEmitter<Keyword>()
   updatedTimes: number
+  otherKeywords: Keyword[] = [];
+  placeKeywords: Keyword[] = [];
+  themeSIGKeywords: Keyword[] = [];
+
+
+  private filterKeywords(type:string) {
+    return this.metadata.keywords?.filter(k => !this.thesaurusContains(k, 'theme') &&  k?.type === type) || [];
+  }
+
+  private thesaurusContains(keyword:Keyword, value: string) {
+    return (keyword?.thesaurus?.id && keyword?.thesaurus?.id?.indexOf(value) !== -1);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('metadata' in changes) {
+      console.log(this.metadata.keywords)
+      this.otherKeywords = this.filterKeywords('other');
+      this.placeKeywords = this.filterKeywords('place');
+      this.themeSIGKeywords = this.metadata.keywords?.filter(k => this.thesaurusContains(k, 'themes_sig'));
+    }
+  }
 
   get hasUsage() {
     return (
@@ -79,7 +102,10 @@ export class MetadataInfoComponent {
 
   get temporalExtent(): { start: string; end: string } {
     const temporalExtents = this.metadata.temporalExtents
-    return getTemporalRangeUnion(temporalExtents)
+    if (temporalExtents) {
+      return getTemporalRangeUnion(temporalExtents)
+    }
+    return null
   }
 
   get shownOrganization() {
@@ -96,5 +122,21 @@ export class MetadataInfoComponent {
 
   onKeywordClick(keyword: Keyword) {
     this.keyword.emit(keyword)
+  }
+
+  private isLessOneMonth(date: Date) {
+    const oneMonthInMillis = 30 * 24 * 60 * 60 * 1000;
+    const currentDate = new Date().getTime();
+    const recordCreatedDate = date?.getTime() || 0;
+    const difference = currentDate - recordCreatedDate;
+    return difference < oneMonthInMillis;
+  }
+
+  get isNew(): boolean {
+    return this.isLessOneMonth(this.metadata.recordCreated);
+  }
+
+  get isUpdated(): boolean {
+    return this.isLessOneMonth(this.metadata.resourceUpdated);
   }
 }

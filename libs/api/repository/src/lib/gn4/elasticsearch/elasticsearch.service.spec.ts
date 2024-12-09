@@ -628,6 +628,9 @@ describe('ElasticsearchService', () => {
           'qualityScore',
           'allKeywords',
           'createDate',
+          'themesSIG',
+          'otherKeywords',
+          'placeKeywords'
         ],
         query: {
           bool: {

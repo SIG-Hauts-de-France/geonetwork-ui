@@ -19,7 +19,7 @@ export const THUMBNAIL_PLACEHOLDER = new InjectionToken<string>(
   'thumbnail-placeholder'
 )
 
-type FitOptions = 'cover' | 'contain' | 'scale-down'
+export type FitOptions = 'cover' | 'contain' | 'scale-down'
 type ThumbnailImageObject = {
   url: string
   fit?: FitOptions
